@@ -77,7 +77,7 @@ public class SubmissionRegistry {
         //Worst case O(n) time
     }
 
-    public Submission lookUp(String studentId){
+    public Submission lookup(String studentId){
         int indexing = hash(studentId);
 
         Node current = table[indexing];
@@ -94,9 +94,9 @@ public class SubmissionRegistry {
         //O(1) Expected - Worst Case O(n)
     }
 
-    public int updateVersions(String studentId, String fileName, int sizeKb, long timeStampMs){
+    public int updateVersion(String studentId, String fileName, int sizeKb, long timeStampMs){
 
-        Submission submission = lookUp(studentId);     //Finding Student (S-0001)
+        Submission submission = lookup(studentId);     //Finding Student (S-0001)
 
         if (submission == null) {
             return -1;

@@ -59,35 +59,35 @@ public class WP1Demos {
         System.out.println("Capacity: " + registry.capacity());
 
         System.out.println("\n--- Lookup All Students ---");
-        System.out.println(registry.lookUp("S-0001"));
-        System.out.println(registry.lookUp("S-0009"));
-        System.out.println(registry.lookUp("S-0002"));
-        System.out.println(registry.lookUp("S-0003"));
-        System.out.println(registry.lookUp("S-0004"));
-        System.out.println(registry.lookUp("S-0005"));
-        System.out.println(registry.lookUp("S-0006"));
-        System.out.println(registry.lookUp("S-0007"));
+        System.out.println(registry.lookup("S-0001"));
+        System.out.println(registry.lookup("S-0009"));
+        System.out.println(registry.lookup("S-0002"));
+        System.out.println(registry.lookup("S-0003"));
+        System.out.println(registry.lookup("S-0004"));
+        System.out.println(registry.lookup("S-0005"));
+        System.out.println(registry.lookup("S-0006"));
+        System.out.println(registry.lookup("S-0007"));
 
         System.out.println("\n--- Version Update ---");
 
-        registry.updateVersions(
+        registry.updateVersion(
                 "S-0001",
                 "project1_final.pdf",
                 1300,
                 81_000_000L
         );
 
-        registry.updateVersions(
+        registry.updateVersion(
                 "S-0001",
                 "project1_really_final.pdf",
                 1500,
                 82_000_000L
         );
 
-        System.out.println(registry.lookUp("S-0001"));
+        System.out.println(registry.lookup("S-0001"));
 
         System.out.println("\n--- Unknown Student ---");
-        System.out.println(registry.lookUp("S-9999"));
+        System.out.println(registry.lookup("S-9999"));
 
         System.out.println("\n--- 100,000 Seeded Lookups ---");
 
@@ -102,7 +102,7 @@ public class WP1Demos {
 
         for (int i = 0; i < 100_000; i++) {
             String id = ids[rng.nextInt(ids.length)];
-            registry.lookUp(id);
+            registry.lookup(id);
         }
 
         long end = System.nanoTime();
