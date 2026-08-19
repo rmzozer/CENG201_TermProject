@@ -69,7 +69,24 @@ public class WP3Demo {
 
             System.out.println(next.getStudentId() + " |" + " Accomodation Flag: " + next.hasAccommodation() + " |" + " Timestamp MS: " + next.getTimestampMs());
 
-            //Flagged first , within each group earlier timeStamp first.
+        }
+
+
+        System.out.println("\n---WP-3 Load Burst");
+
+        Submission[] burst = {student1,student2,student3,student4,student5,student6,student7,student8};
+
+        HeapDispatcher heapBurst = new HeapDispatcher(8);
+
+        heapBurst.loadBurst(burst);
+
+        while (heapBurst.size()>0){
+
+            Submission next = heapBurst.next();
+
+            System.out.println(next.getStudentId() + " |" + " Accomodation Flag: " + next.hasAccommodation() + " |" + " Timestamp MS: " + next.getTimestampMs());
+
+
 
         }
 

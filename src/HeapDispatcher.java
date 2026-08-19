@@ -113,6 +113,25 @@ public class HeapDispatcher {
         return size;
     }
 
+    //Bottom up build heap
+
+    public void loadBurst(Submission [] burst ){
+        heap = new Submission[burst.length];
+
+        for (int i = 0; i < burst.length; i++) {
+
+            heap[i] = burst[i];
+        }
+
+        size = burst.length;
+
+        for (int i = size / 2 - 1; i >=0 ; i--) {
+            shiftDown(i);
+        }
+    }
+
+
+
 
 
 }
