@@ -49,5 +49,31 @@ public class WP3Demo {
             //Flagged first , within each group earlier timeStamp first.
 
         }
+
+        System.out.println("\n---WP-3 Heap Dispatcher");
+
+        HeapDispatcher heap = new HeapDispatcher(8);
+
+        heap.submit(student1);
+        heap.submit(student2);
+        heap.submit(student3);
+        heap.submit(student4);
+        heap.submit(student5);
+        heap.submit(student6);
+        heap.submit(student7);
+        heap.submit(student8);
+
+        while (heap.size()>0){
+
+            Submission next = heap.next();
+
+            System.out.println(next.getStudentId() + " |" + " Accomodation Flag: " + next.hasAccommodation() + " |" + " Timestamp MS: " + next.getTimestampMs());
+
+            //Flagged first , within each group earlier timeStamp first.
+
+        }
+
+
+
     }
 }
