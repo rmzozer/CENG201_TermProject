@@ -14,51 +14,64 @@ public class PlainSubmissionBST {
     }
 
     private Node root;
+    private int treeHeight;
 
     public PlainSubmissionBST(){
         root=null;
+        treeHeight=0;
     }
 
-    //Recursive insertion process
+    //Insertion process
 
-    public void insert(Submission sub){
-        root=insertRecursive(root,sub);
-    }
+    public void insert(Submission sub) {
 
-    private Node insertRecursive(Node current, Submission sub){
-        if (current == null) {
-            return new Node(sub);
+        Node newNode = new Node(sub);
+
+        if (root == null) {
+            root = newNode;
+            treeHeight = 1;
+            return;
         }
 
-        if (sub.getTimestampMs() < current.data.getTimestampMs()) {
-            current.left=insertRecursive(current.left,sub);
+        Node current = root;
+        int depth = 1;
 
-        }else {
-            current.right=insertRecursive(current.right,sub);
+        while (true) {
+
+            depth++;
+
+            if (sub.getTimestampMs() < current.data.getTimestampMs()) {
+
+                if (current.left == null) {
+                    current.left = newNode;
+                    break;
+                }
+
+                current = current.left;
+            }
+
+            else {
+
+                if (current.right == null) {
+                    current.right = newNode;
+                    break;
+                }
+
+                current = current.right;
+            }
         }
 
-        return current;
-
+        if (depth > treeHeight) {
+            treeHeight = depth;
+        }
     }
 
-
-    //Recursive finding height process
+    //Return tree height
 
     public int height(){
-        return heightRecursive(root);
+        return treeHeight;
     }
 
-    private int heightRecursive(Node current){
-
-        if (current == null) {
-            return 0;
-        }
-
-        int leftHeight= heightRecursive(current.left);
-        int rightHeight= heightRecursive(current.right);
-
-        return 1 + Math.max(leftHeight,rightHeight);
-    }
 
 
 
