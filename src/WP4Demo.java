@@ -2,30 +2,66 @@ public class WP4Demo {
 
     public static void main(String[] args) {
 
-        VersionStack stack = new VersionStack();
+        SubmissionRegistry registry = new SubmissionRegistry();
 
-        VersionRecord v1 = new VersionRecord("project1.pdf", 1200, 80_000_000L, 1);
+        RollbackService rollbackService = new RollbackService(registry);
 
-        VersionRecord v2 = new VersionRecord("project2.pdf", 1400, 81_000_000L, 2);
+        //Version - 1
+
+        Submission student = new Submission("S-0001" , "projectV1.pdf",1200,80_000_000L,1
+                ,false);
+
+        registry.put(student);
+
+        System.out.println("---WP - 4 VERION ROLLBACK ---");
+
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
+
+        //Upload Version - 2
+
+        rollbackService.saveVersion("S-0001");
+
+        registry.updateVersion("S-0001","projectV2.pdf",1400,81_000_000L);
+
+        System.out.println("\nAfter UPLOAD Version 2: " );
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
 
 
-        stack.push(v1);
-        stack.push(v2);
+        //Upload Version - 3
 
+        rollbackService.saveVersion("S-0001");
 
-        VersionRecord first = stack.pop();
+        registry.updateVersion("S-0001","projectV3.pdf",1500,82_000_000L);
 
-        System.out.println("Popped version: " + first.getVersion() + " File: " + first.getFileName()
-        );
+        System.out.println("\nAfter UPLOAD Version 3: " );
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
 
+        //First Rollback
+        System.out.println("\n--- First ROLLBACK" );
 
-        VersionRecord second = stack.pop();
+        rollbackService.rollback("S-0001");
 
-        System.out.println("Popped version: " + second.getVersion() + " File: " + second.getFileName()
-        );
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
 
+        //Second Rollback
+        System.out.println("\n--- Second ROLLBACK" );
 
-        System.out.println("Stack empty: " + stack.isEmpty()
-        );
+        rollbackService.rollback("S-0001");
+
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
+
+        //Third Rollback
+        System.out.println("\n--- Third ROLLBACK" );
+
+        rollbackService.rollback("S-0001");
+
+        System.out.println("\nActive Version: " + registry.lookup("S-0001"));
+        rollbackService.printStack("S-0001");
+
     }
 }

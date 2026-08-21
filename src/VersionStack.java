@@ -53,6 +53,33 @@ public class VersionStack {
         return top==null;
     }
 
+    public void printStack() {
+
+        Node current = top;
+
+        System.out.print("Stack: ");
+
+        if (current == null) {
+            System.out.println("EMPTY!");
+            return;
+        }
+
+        while (current != null) {
+
+            System.out.print("v" + current.data.getVersion());
+
+            if (current.next != null) {
+                System.out.print(" -> ");
+            }
+
+            current = current.next;
+        }
+
+        System.out.println();
+    }
+
+
+
 
 
 }
