@@ -20,7 +20,7 @@ public class ExamGateEngine {
 
         intake = new CircularUploadQueue(queueCapacity);
 
-        dispatcher = new HeapDispatcher(3000);
+        dispatcher = new HeapDispatcher(queueCapacity);
 
         registry = new SubmissionRegistry();
 
