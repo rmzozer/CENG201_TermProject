@@ -65,6 +65,20 @@ public class ScenarioGenerator {
         return burst;
     }
 
+    public Submission[] generateBurst2() {
+
+        Submission[] burst = new Submission[BURST2_SIZE];
+
+        for (int i = 0; i < BURST2_SIZE; i++) {
+
+            clockMs += 1 + rng.nextInt(2_000);
+
+            burst[i] = createUpload(i, clockMs);
+        }
+
+        return burst;
+    }
+
 
 
 
