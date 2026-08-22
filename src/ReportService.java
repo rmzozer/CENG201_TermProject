@@ -212,45 +212,28 @@ public class ReportService {
     }
 
 
+    public static int findFirstAfter(Submission[] ascending, long deadlineMs){
 
+        int left = 0;
+        int right = ascending.length - 1;
 
+        int result= -1;
 
+        while(left<=right){
 
+            int middle = (right+left)/2;
 
+            if (ascending[middle].getTimestampMs() > deadlineMs) {
 
-//    public Submission[] sortByTimeFast(Submission[] all){
-//
-//        Submission[] result =  new Submission[all.length];
-//
-//        for (int i = 0; i < all.length ; i++) {             //Copying process for using two methods insertion and merging.
-//            result[i] = all[i];
-//        }
-//
-//        mergeSort(result, 0 , result.length - 1);
-//
-//        return result;
-//    }
-//
-//    private void mergeSort(Submission [] array, int left, int right){
-//
-//        if (left >= right) {
-//            return;
-//        }
-//
-//        int middle = (left+right) / 2;
-//
-//        mergeSort(array,left,middle);               //left side.
-//
-//        mergeSort(array,middle+1,right);        //right side.
-//
-//        merge(array,left,middle,right);
-//
-//    }
+                result =middle;
 
+                right = middle-1;
+            }else {
 
+                left=middle+1;
+            }
+        }
 
-
-
-
-
+        return result;
+    }
 }

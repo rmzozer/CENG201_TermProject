@@ -55,6 +55,44 @@ public class WP6Demo {
 
         System.out.println("\nInsertion and Merge same order: " + sameOrder);
 
+        System.out.println("\n---BINARY SEARCH LATE TEST---");
+
+        int firstLate = ReportService.findFirstAfter(mergeSorted, Submission.DEADLINE_MS);
+
+        System.out.println("First Late Index: " + firstLate);
+
+        if (firstLate != -1) {
+            System.out.println("First Late Student: " + mergeSorted[firstLate].getStudentId());
+        }
+
+
+        System.out.println("\n---LATE LIST---");
+
+        if (firstLate == -1) {
+            System.out.println("No late submissions.");
+        }
+
+        else {
+
+            for (int i = firstLate; i < mergeSorted.length; i++) {
+
+                System.out.println(mergeSorted[i].getStudentId() + " Time: " + mergeSorted[i].getTimestampMs());
+            }
+        }
+
+        System.out.println("\n---BINARY SEARCH EXTRA TESTS---");
+
+        //Deadline before all
+        System.out.println("Before all: " + ReportService.findFirstAfter(mergeSorted, 0L));
+
+
+        //Deadline between two submissions
+        System.out.println("Between two: " + ReportService.findFirstAfter(mergeSorted, 82_500_000L));
+
+
+        //Deadline after all
+        System.out.println("After all: " + ReportService.findFirstAfter(mergeSorted, 90_000_000L));
+
 
 
 
