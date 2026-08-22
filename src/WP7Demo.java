@@ -89,5 +89,7 @@ public class WP7Demo {
         System.out.println("S-0002 Version: " + engine.getStudentVersion("S-0002"));
         System.out.println("S-0003 Version: " + engine.getStudentVersion("S-0003"));
         engine.printCheckpoint("FINAL");
+
+        engine.printFinalReport();
     }
 }

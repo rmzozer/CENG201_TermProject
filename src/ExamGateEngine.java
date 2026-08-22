@@ -150,17 +150,67 @@ public class ExamGateEngine {
     public void printCheckpoint(String title) {
 
         System.out.println("\n---" + title + "---");
-
         System.out.println("Queue Occupancy: " + intake.size());
-
         System.out.println("Accepted Uploads: " + acceptedUploads);
-
         System.out.println("Policy Activations: " + policyActivations);
-
         System.out.println("Re-uploads: " + reuploads);
-
         System.out.println("Rollbacks: " + rollbacks);
-
         System.out.println("Late Count: " + lateCount);
     }
+
+    private Submission[] getActiveSubmissions() {
+
+        Submission[] active = new Submission[registry.size()];
+
+        int index = 0;
+
+        for (int i = 0; i < ScenarioGenerator.STUDENT_COUNT; i++) {
+            String studentId = String.format("S-%04d", i + 1);
+
+            Submission sub = registry.lookup(studentId);
+
+            if (sub != null) {
+                active[index] = sub;
+                index++;
+            }
+        }
+
+        return active;
+    }
+
+    public void printFinalReport() {
+
+        Submission[] active = getActiveSubmissions();
+
+        Submission[] sorted = reportService.sortByTimeFast(active);
+
+        Submission[] top3 = ReportService.topKLargest(active, 3);
+
+
+        System.out.println("\n---FINAL REPORT---");
+
+        System.out.println("Active Submissions: " + active.length);
+
+        System.out.println("\nTop 3 Largest:");
+
+        for (int i = 0; i < top3.length; i++) {
+
+            System.out.println(top3[i].getStudentId() + " - " + top3[i].getSizeKb() + " KB");
+        }
+
+
+        int firstLate = ReportService.findFirstAfter(sorted, Submission.DEADLINE_MS);
+
+
+        if (firstLate == -1) {
+            System.out.println("\nCurrent Active Late Submissions: 0");
+        }
+
+        else {
+
+            System.out.println("\nCurrent Active Late Submissions: " + (sorted.length - firstLate));
+        }
+    }
+
+
 }
