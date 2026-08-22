@@ -24,9 +24,21 @@ public class WP7Demo {
 
         engine.processDispatcher();
 
-        System.out.println("---WP-7 SMALL INTEGRATION TEST---");
+        System.out.println("\n---ROLLBACK TEST---");
 
-        System.out.println("Accepted Uploads: " + engine.getAcceptedUploads());
+        System.out.println("Before Rollback - S-0001 Version: " + engine.getStudentVersion("S-0001"));
+
+        engine.rollbackStudent("S-0001");
+
+        System.out.println("After Rollback - S-0001 Version: " + engine.getStudentVersion("S-0001"));
+
+        engine.printCheckpoint("SMALL INTEGRATION CHECKPOINT");
+
+
+
+        System.out.println("\n---WP-7 SMALL INTEGRATION TEST---");
+
+        System.out.println("\nAccepted Uploads: " + engine.getAcceptedUploads());
 
         System.out.println("Registry Size: " + engine.getRegistrySize());
 
@@ -35,5 +47,7 @@ public class WP7Demo {
         System.out.println("S-0001 Active Version: " + engine.getStudentVersion("S-0001"));
 
         System.out.println("Timeline Records: " + engine.getTimelineCount());
+
+
     }
 }

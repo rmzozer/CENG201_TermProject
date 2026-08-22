@@ -136,4 +136,31 @@ public class ExamGateEngine {
 
         return records.length;
     }
+
+    public void rollbackStudent(String studentId) {
+
+        if (rollbackService.canRollback(studentId)) {
+
+            rollbackService.rollback(studentId);
+
+            rollbacks++;
+        }
+    }
+
+    public void printCheckpoint(String title) {
+
+        System.out.println("\n---" + title + "---");
+
+        System.out.println("Queue Occupancy: " + intake.size());
+
+        System.out.println("Accepted Uploads: " + acceptedUploads);
+
+        System.out.println("Policy Activations: " + policyActivations);
+
+        System.out.println("Re-uploads: " + reuploads);
+
+        System.out.println("Rollbacks: " + rollbacks);
+
+        System.out.println("Late Count: " + lateCount);
+    }
 }

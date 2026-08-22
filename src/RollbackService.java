@@ -66,4 +66,15 @@ public class RollbackService {
         getStack(studentId).printStack();
     }
 
+    public boolean canRollback(String studentId) {
+
+        Submission current = registry.lookup(studentId);
+
+        if (current == null) {
+            return false;
+        }
+
+        return !getStack(studentId).isEmpty();
+    }
+
 }
