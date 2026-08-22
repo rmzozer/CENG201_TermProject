@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class WP6Demo {
     public static void main(String[] args){
 
@@ -93,8 +95,128 @@ public class WP6Demo {
         //Deadline after all
         System.out.println("After all: " + ReportService.findFirstAfter(mergeSorted, 90_000_000L));
 
+        System.out.println("\n---WP-6 TIME ORDER SHEET---");
 
+        reportService.printSheet(mergeSorted);
+
+
+        System.out.println("\n---WP-6 SORT BENCHMARK---");
+
+
+        //WARM-UP
+
+        int warmN = 1_000;
+
+        Submission[] warmData = new Submission[warmN];
+
+        ScenarioGenerator warmGen =
+                new ScenarioGenerator(20260725L);
+
+        for (int i = 0; i < warmN; i++) {
+
+            warmData[i] = warmGen.nextUpload(i % ScenarioGenerator.STUDENT_COUNT);
+        }
+
+        shuffle(warmData, 20260725L);
+
+        reportService.sortByTimeInsertion(warmData);
+        reportService.sortByTimeFast(warmData);
+
+        System.out.println("\n---1,000 SORT BENCHMARK---");
+
+        int n = 1_000;
+
+        Submission[] benchmarkData = new Submission[n];
+
+        ScenarioGenerator benchmarkGen = new ScenarioGenerator(20260725L);
+
+        for (int i = 0; i < n; i++) {
+
+            benchmarkData[i] = benchmarkGen.nextUpload(i % ScenarioGenerator.STUDENT_COUNT);
+        }
+
+        shuffle(benchmarkData, 20260725L);
+
+        //Insertion Sort
+        long insertionStart = System.nanoTime();
+
+        reportService.sortByTimeInsertion(benchmarkData);
+
+        long insertionEnd = System.nanoTime();
+
+        long insertionTime = insertionEnd - insertionStart;
+
+        //Merge Sort
+        long mergeStart = System.nanoTime();
+
+        reportService.sortByTimeFast(benchmarkData);
+
+        long mergeEnd = System.nanoTime();
+
+        long mergeTime = mergeEnd - mergeStart;
+
+        System.out.println("Insertion Sort: " + insertionTime / 1_000_000.0 + " ms");
+
+        System.out.println("Merge Sort: " + mergeTime / 1_000_000.0 + " ms");
+
+
+        System.out.println("\n---100,000 SORT BENCHMARK---");
+
+        n = 100_000;
+
+        benchmarkData = new Submission[n];
+
+        benchmarkGen = new ScenarioGenerator(20260725L);
+
+        for (int i = 0; i < n; i++) {
+
+            benchmarkData[i] =benchmarkGen.nextUpload(i % ScenarioGenerator.STUDENT_COUNT);
+        }
+
+        shuffle(benchmarkData, 20260725L);
+
+
+        insertionStart = System.nanoTime();
+
+        reportService.sortByTimeInsertion(benchmarkData);
+
+        insertionEnd = System.nanoTime();
+
+        insertionTime = insertionEnd - insertionStart;
+
+
+        mergeStart = System.nanoTime();
+
+        reportService.sortByTimeFast(benchmarkData);
+
+        mergeEnd = System.nanoTime();
+
+        mergeTime = mergeEnd - mergeStart;
+
+
+        System.out.println("Insertion Sort: " + insertionTime / 1_000_000.0 + " ms");
+
+        System.out.println("Merge Sort: " + mergeTime / 1_000_000.0 + " ms");
 
 
     }
+
+    private static void shuffle(Submission[] array, long seed) {
+
+        Random random = new Random(seed);
+
+        for (int i = array.length - 1; i > 0; i--) {
+
+            int j = random.nextInt(i + 1);
+
+            Submission temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
+
+
+
+
 }

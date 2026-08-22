@@ -236,4 +236,29 @@ public class ReportService {
 
         return result;
     }
+
+    public void printSheet(Submission[] ascending) {
+
+        System.out.println(
+                String.format("\n%-1s %-20s %-8s %-14s %-10s", "Student ID", "  File Name", " Version", "     Time", "    Late"));
+
+        System.out.println("---------------------------------------------------------------------");
+
+
+        for (int i = 0; i < ascending.length; i++) {
+
+            Submission sub = ascending[i];
+
+            String late;
+
+            if (sub.isLate()) {
+                late = "LATE";
+            }
+            else {
+                late = "ON TIME";
+            }
+
+            System.out.println(String.format("%-10s %-24s %-6d %-14s %-10s", sub.getStudentId(), sub.getFileName(), sub.getVersion(), sub.clock(), late));
+        }
+    }
 }
