@@ -95,6 +95,162 @@ public class ReportService {
 
     }
 
+    //Insertion Sort by using timestampMS
+
+    public Submission[] sortByTimeInsertion(Submission[] all){
+
+        Submission[] result = new Submission[all.length];
+
+        for (int i = 0; i < all.length; i++) {
+            result[i]=all[i];
+        }
+
+        for (int i = 1; i < result.length ; i++) {    //i=1 because index 0 already ordered before.
+
+            Submission current= result[i];
+
+            int j = i-1;
+
+            while (j >=0 && result[j].getTimestampMs() >current.getTimestampMs()){
+
+                result[j+1]=result[j];
+
+                j--;
+            }
+
+            result[j+1] = current;
+        }
+
+        return result;
+
+    }
+
+    // Merge Sort - Divide And Conquer
+
+    private  Submission[] merge(Submission[] array1, Submission[] array2){
+
+        Submission[] combined = new Submission[array1.length+ array2.length];
+
+        int index = 0;
+        int i=0;
+        int j=0;
+
+        while (i < array1.length && j < array2.length){
+
+            if (array1 [i].getTimestampMs() < array2[j].getTimestampMs()) {
+                combined[index] = array1[i];
+
+                index++;
+
+                i++;
+            }else {
+
+                combined[index] = array2[j];
+
+                index++;
+                j++;
+
+            }
+        }
+
+        while (i< array1.length){
+
+            combined[index] = array1[i];
+
+            index++;
+            i++;
+
+        }
+
+        while (j< array2.length){
+
+            combined[index] = array2[j];
+
+            index++;
+            j++;
+
+        }
+
+        return combined;
+    }
+
+    private Submission [] mergeSort(Submission[] array){
+
+        if (array.length <=1) {                       //Base Case   //1 element  already ordred.
+            return array;
+        }
+
+        int middle = array.length/2;
+
+        Submission[] left = new Submission[middle];
+
+        Submission[] right = new Submission[array.length-middle];
+
+        for (int i = 0; i < middle; i++) {
+            left[i]=array[i];
+        }
+
+        for (int i = middle; i < array.length; i++) {
+            right[i-middle] = array[i];
+        }
+
+        left= mergeSort(left);
+        right=mergeSort(right);
+
+        return merge(left,right);
+    }
+
+    public Submission[] sortByTimeFast(Submission[] all){
+
+        Submission[] copy = new Submission[all.length];
+
+        for (int i = 0; i < all.length; i++) {
+            copy[i] = all[i];
+        }
+
+        return mergeSort(copy);
+    }
+
+
+
+
+
+
+
+
+//    public Submission[] sortByTimeFast(Submission[] all){
+//
+//        Submission[] result =  new Submission[all.length];
+//
+//        for (int i = 0; i < all.length ; i++) {             //Copying process for using two methods insertion and merging.
+//            result[i] = all[i];
+//        }
+//
+//        mergeSort(result, 0 , result.length - 1);
+//
+//        return result;
+//    }
+//
+//    private void mergeSort(Submission [] array, int left, int right){
+//
+//        if (left >= right) {
+//            return;
+//        }
+//
+//        int middle = (left+right) / 2;
+//
+//        mergeSort(array,left,middle);               //left side.
+//
+//        mergeSort(array,middle+1,right);        //right side.
+//
+//        merge(array,left,middle,right);
+//
+//    }
+
+
+
+
+
 
 
 }

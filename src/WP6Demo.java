@@ -19,9 +19,44 @@ public class WP6Demo {
 
         for (int i = 0; i < top3.length; i++) {
 
-            System.out.println(top3[i].getStudentId() + " Size: " + top3[i].getSizeKb() + " KB"
-            );
+            System.out.println(top3[i].getStudentId() + " Size: " + top3[i].getSizeKb() + " KB");
         }
+
+
+        System.out.println("\n---INSERTION SORT BY TIME---");
+
+        ReportService reportService = new ReportService();
+
+        Submission[] insertionSorted = reportService.sortByTimeInsertion(all);
+
+        for (int i = 0; i < insertionSorted.length; i++) {
+
+            System.out.println(insertionSorted[i].getStudentId() + " Timestamp: " + insertionSorted[i].getTimestampMs());
+        }
+
+        System.out.println("\n---MERGE SORT BY TIME---");
+
+        Submission[] mergeSorted = reportService.sortByTimeFast(all);
+
+        for (int i = 0; i < mergeSorted.length; i++) {
+
+            System.out.println(mergeSorted[i].getStudentId() + " Timestamp: " + mergeSorted[i].getTimestampMs());
+        }
+
+
+        boolean sameOrder = true;
+
+        for (int i = 0; i < all.length; i++) {
+
+            if (!insertionSorted[i].getStudentId().equals(mergeSorted[i].getStudentId())) {
+                sameOrder = false;
+            }
+        }
+
+        System.out.println("\nInsertion and Merge same order: " + sameOrder);
+
+
+
 
     }
 }
