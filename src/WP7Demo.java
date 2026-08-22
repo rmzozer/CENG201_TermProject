@@ -44,6 +44,50 @@ public class WP7Demo {
         System.out.println("Timeline Records: " + engine.getTimelineCount());
         System.out.println("S-0001 Version: " + engine.getStudentVersion("S-0001"));
 
+        // BURST 3
+        Submission[] burst3 = generator.generateBurst3();
 
+        int i = 0;
+
+
+
+        while (i < burst3.length && burst3[i].getTimestampMs() <= Submission.DEADLINE_MS) {
+            engine.acceptUpload(burst3[i]);
+
+            i++;
+        }
+
+        engine.printCheckpoint("AT 23:59");
+
+        while (i < burst3.length) {
+
+            engine.acceptUpload(burst3[i]);
+
+            i++;
+        }
+
+        engine.printCheckpoint("AFTER BURST 3");
+
+        engine.moveIntakeToDispatcher();
+        engine.processDispatcher();
+
+
+        System.out.println("\nAfter processing Burst 3:");
+        System.out.println("Registry Size: " + engine.getRegistrySize());
+        System.out.println("Re-uploads: " + engine.getReuploads());
+        System.out.println("Timeline Records: " + engine.getTimelineCount());
+
+        // ROLLBACKS
+
+        engine.rollbackStudent("S-0001");
+        engine.rollbackStudent("S-0002");
+        engine.rollbackStudent("S-0003");
+
+        System.out.println("\n---ROLLBACK CONTROL---");
+
+        System.out.println("S-0001 Version: " + engine.getStudentVersion("S-0001"));
+        System.out.println("S-0002 Version: " + engine.getStudentVersion("S-0002"));
+        System.out.println("S-0003 Version: " + engine.getStudentVersion("S-0003"));
+        engine.printCheckpoint("FINAL");
     }
 }

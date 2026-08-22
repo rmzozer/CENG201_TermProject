@@ -79,6 +79,24 @@ public class ScenarioGenerator {
         return burst;
     }
 
+    public Submission[] generateBurst3() {
+
+        Submission[] burst = new Submission[BURST3_SIZE];
+
+        long burstStart = Submission.DEADLINE_MS - 120_000L;
+
+        for (int i = 0; i < BURST3_SIZE; i++) {
+
+            long timestamp = burstStart + (i * 200L);
+
+            burst[i] = createUpload(i % STUDENT_COUNT, timestamp);
+        }
+
+        clockMs = burstStart + ((BURST3_SIZE - 1) * 200L);
+
+        return burst;
+    }
+
 
 
 
